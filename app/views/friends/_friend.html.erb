@@ -1,0 +1,192 @@
+<div id="<%= dom_id friend %>" class="friend-profile-card">
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+      <div class="friend-header">
+        <div class="friend-avatar">
+          <%= friend.first_name[0] %><%= friend.last_name[0] %>
+        </div>
+        <div class="friend-name">
+          <h4><%= friend.first_name %> <%= friend.last_name %></h4>
+        </div>
+      </div>
+      
+      <div class="friend-details">
+        <div class="friend-info-item">
+          <div class="info-icon">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Email</div>
+            <div class="info-value"><%= friend.email %></div>
+          </div>
+        </div>
+        
+        <div class="friend-info-item">
+          <div class="info-icon">
+            <i class="bi bi-telephone"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Phone</div>
+            <div class="info-value"><%= friend.phone.present? ? friend.phone : "Not provided" %></div>
+          </div>
+        </div>
+        
+        <div class="friend-info-item">
+          <div class="info-icon">
+            <i class="bi bi-twitter"></i>
+          </div>
+          <div class="info-content">
+            <div class="info-label">Twitter</div>
+            <div class="info-value">
+              <% if friend.twitter.present? %>
+                <a href="https://twitter.com/<%= friend.twitter.gsub('@', '') %>" target="_blank" class="twitter-link">
+                  <%= friend.twitter %>
+                </a>
+              <% else %>
+                Not provided
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .friend-profile-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .friend-profile-card .card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .friend-profile-card .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .friend-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .friend-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+  }
+  
+  .friend-avatar {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .friend-name h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .friend-details {
+    padding: 1.5rem;
+  }
+  
+  .friend-info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+  }
+  
+  .friend-info-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .info-icon {
+    width: 36px;
+    height: 36px;
+    background-color: #dbeafe;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.875rem;
+    color: #3b82f6;
+    font-size: 1.125rem;
+  }
+  
+  .info-content {
+    flex: 1;
+  }
+  
+  .info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .info-value {
+    font-size: 1rem;
+    color: #1e293b;
+    font-weight: 500;
+    word-break: break-word;
+  }
+  
+  .twitter-link {
+    color: #3b82f6;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .twitter-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 576px) {
+    .friend-header {
+      padding: 1.25rem;
+    }
+    
+    .friend-avatar {
+      width: 50px;
+      height: 50px;
+      font-size: 1.25rem;
+    }
+    
+    .friend-name h4 {
+      font-size: 1.25rem;
+    }
+    
+    .friend-details {
+      padding: 1.25rem;
+    }
+  }
+</style>

@@ -1,0 +1,545 @@
+<div class="profile-edit-container py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="header-content">
+              <div class="header-icon-container">
+                <div class="header-icon">
+                  <i class="bi bi-person-gear"></i>
+                </div>
+              </div>
+              <div class="header-text">
+                <h1 class="auth-title">Edit Your Profile</h1>
+                <p class="auth-subtitle">Update your personal information and password</p>
+              </div>
+            </div>
+            <div class="header-decoration">
+              <div class="decoration-line"></div>
+              <div class="decoration-pattern">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <div class="auth-form">
+              <%= render "devise/shared/error_messages", resource: resource %>
+
+              <div class="field form-group mb-4">
+                <%= f.label :email, class: "form-label" %>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", placeholder: "Your email address" %>
+                </div>
+              </div>
+
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-2"></i>Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+                </div>
+              <% end %>
+
+              <div class="password-section mt-5 mb-4">
+                <h4 class="section-title">Change Password</h4>
+                <p class="section-hint">Leave these fields blank if you don't want to change your password</p>
+              </div>
+
+              <div class="field form-group mb-4">
+                <%= f.label :password, class: "form-label" %>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                  <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg", placeholder: "New password" %>
+                </div>
+                <% if @minimum_password_length %>
+                  <div class="form-text"><i class="bi bi-shield-lock me-1"></i><%= @minimum_password_length %> characters minimum</div>
+                <% end %>
+              </div>
+
+              <div class="field form-group mb-4">
+                <%= f.label :password_confirmation, class: "form-label" %>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-shield-check"></i></span>
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg", placeholder: "Confirm your new password" %>
+                </div>
+              </div>
+
+              <div class="confirmation-section mt-5 mb-4">
+                <h4 class="section-title">Confirm Changes</h4>
+                <p class="section-hint">We need your current password to confirm your changes</p>
+              </div>
+
+              <div class="field form-group mb-4">
+                <%= f.label :current_password, class: "form-label required-field" %>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-key"></i></span>
+                  <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control form-control-lg", placeholder: "Enter your current password" %>
+                </div>
+              </div>
+
+              <div class="actions">
+                <%= f.submit "Update Profile", class: "btn btn-primary btn-lg w-100" %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="account-actions mt-5">
+            <div class="actions-header">
+              <div class="actions-title">
+                <i class="bi bi-gear-wide-connected me-2"></i>
+                <h4>Account Management</h4>
+              </div>
+              <div class="header-decoration mb-4">
+                <div class="decoration-line"></div>
+                <div class="decoration-pattern">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="account-action-card action-back">
+                  <div class="action-content">
+                    <div class="action-icon">
+                      <i class="bi bi-arrow-left-circle"></i>
+                    </div>
+                    <div class="action-text">
+                      <h5>Return to Previous Page</h5>
+                      <p>Go back to where you were before</p>
+                    </div>
+                  </div>
+                  <div class="action-button">
+                    <%= link_to "Go Back", :back, class: "btn btn-outline-secondary w-100" %>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="account-action-card action-danger">
+                  <div class="action-warning">
+                    <span class="warning-badge">
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      Permanent Action
+                    </span>
+                  </div>
+                  <div class="action-content">
+                    <div class="action-icon danger-icon">
+                      <i class="bi bi-trash3"></i>
+                    </div>
+                    <div class="action-text">
+                      <h5>Delete My Account</h5>
+                      <p>Your account and all data will be permanently deleted</p>
+                    </div>
+                  </div>
+                  <div class="action-button">
+                    <%= button_to "Delete My Account", 
+                        registration_path(resource_name), 
+                        data: { confirm: "Are you sure you want to delete your account? This action cannot be undone.", 
+                                turbo_confirm: "Are you sure you want to delete your account? This action cannot be undone." }, 
+                        method: :delete, 
+                        class: "btn btn-danger w-100" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --secondary: #475569;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #e2e8f0;
+      --white: #ffffff;
+      --danger: #ef4444;
+      --danger-dark: #dc2626;
+      --danger-light: #fee2e2;
+      --border-radius: 0.5rem;
+      --transition: all 0.3s ease;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      background-color: var(--light);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--dark);
+    }
+    
+    .profile-edit-container {
+      min-height: 100vh;
+      padding-top: 2rem;
+      padding-bottom: 4rem;
+    }
+    
+    .auth-card {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(to right, var(--primary), #818cf8);
+    }
+    
+    .auth-header {
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .header-icon-container {
+      margin-right: 1.25rem;
+    }
+    
+    .header-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.75rem;
+      box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+    }
+    
+    .header-text {
+      flex: 1;
+    }
+    
+    .auth-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+      background: linear-gradient(to right, var(--dark), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .auth-subtitle {
+      color: var(--gray);
+      font-size: 1rem;
+      max-width: 90%;
+    }
+    
+    .header-decoration {
+      position: relative;
+      padding-top: 0.5rem;
+    }
+    
+    .decoration-line {
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), transparent);
+      width: 100%;
+    }
+    
+    .decoration-pattern {
+      display: flex;
+      gap: 8px;
+      position: absolute;
+      top: -4px;
+      left: 0;
+    }
+    
+    .decoration-pattern span {
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--primary);
+    }
+    
+    .decoration-pattern span:nth-child(2) {
+      opacity: 0.8;
+    }
+    
+    .decoration-pattern span:nth-child(3) {
+      opacity: 0.6;
+    }
+    
+    .decoration-pattern span:nth-child(4) {
+      opacity: 0.4;
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .section-hint {
+      color: var(--gray);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .required-field::after {
+      content: " *";
+      color: var(--danger);
+    }
+    
+    .input-group-text {
+      background-color: var(--primary-light);
+      border-color: var(--gray-light);
+      color: var(--primary);
+    }
+    
+    .form-control {
+      border-color: var(--gray-light);
+      color: var(--dark);
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-text {
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: var(--transition);
+    }
+    
+    .btn-primary:hover, .btn-primary:focus {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      border-color: var(--danger);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .btn-danger:hover, .btn-danger:focus {
+      background-color: var(--danger-dark);
+      border-color: var(--danger-dark);
+    }
+    
+    .account-actions {
+      border-top: 1px solid var(--gray-light);
+      padding-top: 2rem;
+    }
+    
+    .actions-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .actions-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .actions-title h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0;
+    }
+    
+    .actions-title i {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    
+    .account-action-card {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .action-back {
+      border-top: 4px solid var(--secondary);
+    }
+    
+    .action-back:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .action-danger {
+      border-top: 4px solid var(--danger);
+      position: relative;
+    }
+    
+    .action-danger:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 20px -3px rgba(239, 68, 68, 0.15);
+    }
+    
+    .action-warning {
+      padding: 0.75rem 1.25rem;
+      background-color: var(--danger-light);
+      border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    
+    .warning-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--danger-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .warning-badge i {
+      margin-right: 0.5rem;
+    }
+    
+    .action-content {
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      flex: 1;
+    }
+    
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background-color: var(--gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      font-size: 1.25rem;
+      color: var(--secondary);
+    }
+    
+    .danger-icon {
+      background-color: var(--danger-light);
+      color: var(--danger);
+    }
+    
+    .action-text {
+      flex: 1;
+    }
+    
+    .action-text h5 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .action-danger .action-text h5 {
+      color: var(--danger);
+    }
+    
+    .action-text p {
+      font-size: 0.875rem;
+      color: var(--gray);
+      margin-bottom: 0;
+    }
+    
+    .action-button {
+      padding: 0 1.25rem 1.25rem 1.25rem;
+    }
+    
+    .btn-outline-secondary {
+      color: var(--secondary);
+      border-color: var(--secondary);
+      transition: var(--transition);
+    }
+    
+    .btn-outline-secondary:hover {
+      background-color: var(--secondary);
+      color: white;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .auth-card {
+        padding: 1.5rem;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .header-icon-container {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+      
+      .auth-title {
+        font-size: 1.5rem;
+      }
+      
+      .section-title {
+        font-size: 1.125rem;
+      }
+      
+      .account-action-card {
+        margin-bottom: 1rem;
+      }
+      
+      .action-content {
+        padding: 1.25rem 1rem;
+      }
+      
+      .action-button {
+        padding: 0 1rem 1rem 1rem;
+      }
+    }
+  </style>
+<% end %>

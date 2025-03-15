@@ -1,0 +1,399 @@
+<div class="friend-form-page py-5">
+  <div class="container">
+    <div class="friend-form-container">
+      <div class="card border-0 shadow-lg overflow-hidden">
+        <div class="row g-0">
+          <!-- Visual Left Panel -->
+          <div class="col-lg-4 d-none d-lg-block">
+            <div class="visual-panel h-100 d-flex flex-column">
+              <div class="panel-content p-4 text-white">
+                <div class="panel-icon mb-4">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+                <h3 class="panel-title mb-3">
+                  <%= friend.new_record? ? "Add New Friend" : "Edit Friend" %>
+                </h3>
+                <p class="panel-text mb-4">Keep track of your friends' contact information and stay connected.</p>
+                
+                <div class="panel-steps">
+                  <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Enter contact details</div>
+                  </div>
+                  <div class="step-connector"></div>
+                  <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Save and connect</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="panel-decoration">
+                <div class="decoration-circle circle-1"></div>
+                <div class="decoration-circle circle-2"></div>
+                <div class="decoration-circle circle-3"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Form Right Panel -->
+          <div class="col-lg-8">
+            <div class="form-panel p-4 p-lg-5">
+              <!-- Mobile Header (visible only on small screens) -->
+              <div class="mobile-header d-lg-none mb-4">
+                <h2 class="mobile-title">
+                  <%= friend.new_record? ? "Add New Friend" : "Edit Friend" %>
+                </h2>
+                <div class="title-underline"></div>
+              </div>
+              
+              <%= form_with(model: friend) do |form| %>
+                <% if friend.errors.any? %>
+                  <div class="alert alert-danger mb-4">
+                    <div class="d-flex">
+                      <i class="bi bi-exclamation-triangle-fill me-2 mt-1"></i>
+                      <div>
+                        <h6 class="alert-heading mb-1">
+                          <%= pluralize(friend.errors.count, "error") %> prohibited this friend from being saved:
+                        </h6>
+                        <ul class="mb-0 ps-3">
+                          <% friend.errors.each do |error| %>
+                            <li><%= error.full_message %></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                
+                <!-- Form Sections -->
+                <div class="form-section mb-4">
+                  <h5 class="section-title">
+                    <i class="bi bi-person-badge me-2"></i>
+                    Personal Information
+                  </h5>
+                  
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <%= form.label :first_name, class: "form-label" %>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light">
+                            <i class="bi bi-person"></i>
+                          </span>
+                          <%= form.text_field :first_name, class: "form-control", placeholder: "Enter first name" %>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <%= form.label :last_name, class: "form-label" %>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light">
+                            <i class="bi bi-person"></i>
+                          </span>
+                          <%= form.text_field :last_name, class: "form-control", placeholder: "Enter last name" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-section mb-4">
+                  <h5 class="section-title">
+                    <i class="bi bi-chat-dots me-2"></i>
+                    Contact Details
+                  </h5>
+                  
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <%= form.label :email, class: "form-label" %>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light">
+                            <i class="bi bi-envelope"></i>
+                          </span>
+                          <%= form.email_field :email, class: "form-control", placeholder: "example@email.com" %>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <%= form.label :phone, class: "form-label" %>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light">
+                            <i class="bi bi-telephone"></i>
+                          </span>
+                          <%= form.telephone_field :phone, class: "form-control", placeholder: "555-123-4567" %>
+                        </div>
+                        <div class="form-text text-muted">
+                          <small><i class="bi bi-info-circle me-1"></i>Optional field</small>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <%= form.label :twitter, class: "form-label" %>
+                        <div class="input-group">
+                          <span class="input-group-text bg-light">
+                            <i class="bi bi-twitter"></i>
+                          </span>
+                          <%= form.text_field :twitter, class: "form-control", placeholder: "@username" %>
+                        </div>
+                        <div class="form-text text-muted">
+                          <small><i class="bi bi-info-circle me-1"></i>Optional field</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <%= form.number_field :user_id, id: :friend_user_id, class: "form-control", value: current_user.id, type: :hidden %>
+                
+                <div class="form-actions mt-4 d-flex justify-content-between align-items-center">
+                  <%= link_to friends_path, class: "btn btn-outline-secondary" do %>
+                    <i class="bi bi-arrow-left me-2"></i>Cancel
+                  <% end %>
+                  
+                  <%= form.submit class: "btn btn-primary" do %>
+                    <i class="bi bi-check-lg me-2"></i>
+                    <%= friend.new_record? ? "Add Friend" : "Update Friend" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .friend-form-page {
+    min-height: 100vh;
+    background-color: #f8fafc;
+  }
+  
+  .friend-form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  
+  /* Left Visual Panel */
+  .visual-panel {
+    background: linear-gradient(145deg, #3b82f6 0%, #1d4ed8 100%);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .panel-icon {
+    font-size: 3rem;
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+  }
+  
+  .panel-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .panel-text {
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+  
+  .panel-steps {
+    margin-top: 2rem;
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-right: 0.75rem;
+  }
+  
+  .step.active .step-number {
+    background: white;
+    color: #2563eb;
+  }
+  
+  .step-text {
+    font-size: 0.875rem;
+  }
+  
+  .step-connector {
+    width: 2px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-left: 13px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .panel-decoration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .decoration-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .circle-1 {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+  }
+  
+  .circle-2 {
+    width: 150px;
+    height: 150px;
+    top: 30%;
+    left: -75px;
+  }
+  
+  .circle-3 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Right Form Panel */
+  .form-panel {
+    background: white;
+  }
+  
+  .mobile-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+  }
+  
+  .title-underline {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, #3b82f6, #93c5fd);
+    border-radius: 2px;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-group-text {
+    border-color: #e2e8f0;
+    border-right: none;
+    color: #64748b;
+  }
+  
+  .form-control {
+    border-color: #e2e8f0;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-text {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-outline-secondary {
+    color: #64748b;
+    border-color: #cbd5e1;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background-color: white;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #f8fafc;
+    color: #1e293b;
+    transform: translateY(-2px);
+  }
+  
+  .alert-danger {
+    background-color: #fee2e2;
+    border-color: #fecaca;
+    color: #b91c1c;
+    border-radius: 0.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .friend-form-container {
+      max-width: 600px;
+    }
+  }
+</style>
